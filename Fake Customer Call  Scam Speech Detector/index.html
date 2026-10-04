@@ -1,0 +1,727 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScamShield AI | Fake Customer Call Detector</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+    <div class="loader-content">
+        <div class="loader-shield">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h1>SCAMSHIELD AI</h1>
+        <p>INITIALIZING AI SECURITY ENGINE...</p>
+        <div class="loader-bar">
+            <span></span>
+        </div>
+    </div>
+</div>
+
+<!-- BACKGROUND PARTICLES -->
+<div class="particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- MOBILE MENU BUTTON -->
+<button class="mobile-menu" onclick="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+
+        <div>
+            <h2>SCAMSHIELD</h2>
+            <span>AI SECURITY</span>
+        </div>
+    </div>
+
+    <p class="menu-label">MAIN MENU</p>
+
+    <div class="nav-item active" onclick="goTo('dashboard', this)">
+        <i class="fa-solid fa-house"></i>
+        <span>Dashboard</span>
+    </div>
+
+    <div class="nav-item" onclick="goTo('voice', this)">
+        <i class="fa-solid fa-microphone"></i>
+        <span>Voice Analysis</span>
+    </div>
+
+    <div class="nav-item" onclick="goTo('text', this)">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Text Analysis</span>
+    </div>
+
+    <div class="nav-item" onclick="goTo('analytics', this)">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Analytics</span>
+    </div>
+
+    <div class="nav-item" onclick="goTo('history', this)">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>History</span>
+    </div>
+
+    <div class="nav-item" onclick="goTo('safety', this)">
+        <i class="fa-solid fa-shield-heart"></i>
+        <span>Safety Tips</span>
+    </div>
+
+    <div class="nav-item" onclick="showSettings()">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+    </div>
+
+    <div class="profile">
+        <div class="profile-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div>
+            <strong>Student User</strong>
+            <small>AI Security Demo</small>
+        </div>
+    </div>
+
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+
+        <div>
+            <p class="mini-title">WELCOME BACK</p>
+            <h1>AI Security Dashboard</h1>
+            <p class="subtitle">
+                Analyze conversations and detect suspicious speech patterns.
+            </p>
+        </div>
+
+        <div class="top-actions">
+
+            <button class="icon-button" onclick="toggleTheme()">
+                <i class="fa-solid fa-moon" id="themeIcon"></i>
+            </button>
+
+            <button class="icon-button" onclick="showToast('All systems are online')">
+                <i class="fa-solid fa-bell"></i>
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="dashboard">
+
+        <div class="hero-content">
+
+            <div class="online-badge">
+                <span></span>
+                AI DETECTION ENGINE ONLINE
+            </div>
+
+            <h2>
+                Detect suspicious conversations
+                <span>before they become dangerous.</span>
+            </h2>
+
+            <p>
+                ScamShield AI analyzes speech, text and conversation
+                patterns to identify potential scams, manipulation and fraud indicators.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button class="primary-btn" onclick="goTo('voice')">
+                    <i class="fa-solid fa-microphone"></i>
+                    Start Voice Analysis
+                </button>
+
+                <button class="secondary-btn"
+                        onclick="document.getElementById('audioFile').click()">
+                    <i class="fa-solid fa-folder-open"></i>
+                    Upload Audio
+                </button>
+
+                <button class="secondary-btn" onclick="goTo('text')">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Analyze Text
+                </button>
+
+                <input type="file"
+                       id="audioFile"
+                       accept="audio/*"
+                       hidden
+                       onchange="uploadAudio(this)">
+
+            </div>
+
+        </div>
+
+        <div class="hero-shield">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+
+    </section>
+
+    <!-- STATISTICS -->
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="stat-icon purple">
+                <i class="fa-solid fa-phone"></i>
+            </div>
+
+            <div>
+                <p>Total Calls Analyzed</p>
+                <h2 id="totalCalls">128</h2>
+                <small>↑ 12.5% this week</small>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon red">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <div>
+                <p>Scam Calls Detected</p>
+                <h2 id="scamCalls">47</h2>
+                <small class="red-text">High-risk conversations</small>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon green">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div>
+                <p>Genuine Calls</p>
+                <h2 id="genuineCalls">81</h2>
+                <small>Safe conversations</small>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon cyan">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <div>
+                <p>Average Risk Score</p>
+                <h2 id="averageRisk">38%</h2>
+                <small>AI calculated</small>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- VOICE + TEXT -->
+    <section class="analysis-section">
+
+        <div class="section-heading">
+            <div>
+                <p>AI ANALYSIS</p>
+                <h2>Conversation Analyzer</h2>
+            </div>
+
+            <span>Real-time Demo Engine</span>
+        </div>
+
+        <div class="analysis-grid">
+
+            <!-- VOICE CARD -->
+            <div class="glass-card" id="voice">
+
+                <div class="card-heading">
+                    <div>
+                        <i class="fa-solid fa-microphone"></i>
+                        <h3>Voice Analysis</h3>
+                    </div>
+
+                    <span>Web Speech API</span>
+                </div>
+
+                <div class="voice-area">
+
+                    <div class="mic-circle" id="micCircle">
+                        <i class="fa-solid fa-microphone"></i>
+                    </div>
+
+                    <div class="timer" id="timer">00:00</div>
+
+                    <div class="waveform" id="waveform">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="voice-buttons">
+
+                        <button class="primary-btn"
+                                id="recordButton"
+                                onclick="startRecording()">
+                            <i class="fa-solid fa-microphone"></i>
+                            Start Recording
+                        </button>
+
+                        <button class="secondary-btn"
+                                onclick="stopRecording()">
+                            <i class="fa-solid fa-stop"></i>
+                            Stop
+                        </button>
+
+                    </div>
+
+                    <div class="voice-buttons">
+
+                        <button class="secondary-btn"
+                                onclick="playRecording()">
+                            <i class="fa-solid fa-play"></i>
+                            Play
+                        </button>
+
+                        <button class="primary-btn"
+                                onclick="analyzeVoice()">
+                            <i class="fa-solid fa-brain"></i>
+                            Analyze Voice
+                        </button>
+
+                    </div>
+
+                    <audio id="audioPlayer" controls></audio>
+
+                </div>
+
+            </div>
+
+            <!-- TEXT CARD -->
+            <div class="glass-card" id="text">
+
+                <div class="card-heading">
+                    <div>
+                        <i class="fa-solid fa-file-lines"></i>
+                        <h3>Text Analysis</h3>
+                    </div>
+
+                    <span>AI Demo Engine</span>
+                </div>
+
+                <textarea
+                    id="textInput"
+                    placeholder="Paste customer call transcript here..."></textarea>
+
+                <p class="hint">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    Try suspicious words like OTP, PIN, bank, money, urgent,
+                    verify, password, transfer...
+                </p>
+
+                <div class="text-buttons">
+
+                    <button class="primary-btn"
+                            onclick="analyzeText()">
+                        <i class="fa-solid fa-brain"></i>
+                        Analyze Conversation
+                    </button>
+
+                    <button class="secondary-btn"
+                            onclick="loadDemo()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Load Demo
+                    </button>
+
+                    <button class="secondary-btn"
+                            onclick="clearText()">
+                        <i class="fa-solid fa-eraser"></i>
+                        Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RESULT -->
+    <section class="result-card" id="result">
+
+        <div class="result-title">
+            <div>
+                <p>AI SECURITY ENGINE</p>
+                <h2>Analysis Result</h2>
+            </div>
+
+            <span id="analysisTime">Analyzed just now</span>
+        </div>
+
+        <div class="result-main">
+
+            <div class="result-info">
+
+                <div class="result-status" id="status">
+                    🔴 HIGH RISK – POTENTIAL SCAM
+                </div>
+
+                <h3 id="resultHeadline">
+                    Suspicious conversation detected
+                </h3>
+
+                <p id="resultReason">
+                    Multiple high-risk indicators were detected in this conversation.
+                </p>
+
+            </div>
+
+            <div class="risk-meter" id="riskMeter">
+
+                <div>
+                    <strong id="riskScore">82%</strong>
+                    <span>RISK SCORE</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- DETECTION CARDS -->
+        <div class="detection-grid">
+
+            <div class="detection-card">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Suspicious Keywords</span>
+                <strong id="keywords">OTP, bank, urgent</strong>
+            </div>
+
+            <div class="detection-card">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                <span>Money Request</span>
+                <strong id="moneyRequest">Detected</strong>
+            </div>
+
+            <div class="detection-card">
+                <i class="fa-solid fa-lock"></i>
+                <span>Personal Information</span>
+                <strong id="personalInfo">Detected</strong>
+            </div>
+
+            <div class="detection-card">
+                <i class="fa-solid fa-key"></i>
+                <span>OTP / PIN</span>
+                <strong id="otpPin">Detected</strong>
+            </div>
+
+            <div class="detection-card">
+                <i class="fa-solid fa-clock"></i>
+                <span>Urgency</span>
+                <strong id="urgency">High</strong>
+            </div>
+
+            <div class="detection-card">
+                <i class="fa-solid fa-face-frown"></i>
+                <span>Threat / Fear</span>
+                <strong id="threat">Detected</strong>
+            </div>
+
+            <div class="detection-card">
+                <i class="fa-solid fa-mask-face"></i>
+                <span>Manipulation</span>
+                <strong id="manipulation">High</strong>
+            </div>
+
+            <div class="detection-card">
+                <i class="fa-solid fa-wave-square"></i>
+                <span>Speech Confidence</span>
+                <strong id="confidence">94%</strong>
+            </div>
+
+        </div>
+
+        <!-- EXPLANATION -->
+        <div class="explanation">
+
+            <h3>
+                <i class="fa-solid fa-circle-info"></i>
+                Why was this call flagged?
+            </h3>
+
+            <p id="explanationText">
+                The conversation contains multiple high-risk indicators including
+                OTP requests, urgent language, financial information requests
+                and threats of account suspension.
+            </p>
+
+        </div>
+
+        <!-- SAFETY -->
+        <div class="recommendation">
+
+            <h3>⚠️ Safety Recommendation</h3>
+
+            <p>
+                ⚠️ Do not share OTP, PIN or passwords.<br>
+                ⚠️ Do not transfer money to unknown accounts.<br>
+                ⚠️ Verify the caller through the official customer-support number.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="page-section" id="analytics">
+
+        <div class="section-heading">
+            <div>
+                <p>DATA INSIGHTS</p>
+                <h2>Analytics Overview</h2>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+
+            <div class="glass-card chart-card">
+                <h3>Scam vs Genuine Calls</h3>
+                <canvas id="callsChart"></canvas>
+            </div>
+
+            <div class="glass-card chart-card">
+                <h3>Risk Distribution</h3>
+                <canvas id="riskChart"></canvas>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="page-section">
+
+        <div class="section-heading">
+            <div>
+                <p>THREAT INTELLIGENCE</p>
+                <h2>Scam Categories</h2>
+            </div>
+        </div>
+
+        <div class="category-grid">
+
+            <div class="category-card">
+                <i class="fa-solid fa-credit-card"></i>
+                <h4>Banking Scam</h4>
+                <p>Fake bank verification</p>
+            </div>
+
+            <div class="category-card">
+                <i class="fa-solid fa-gift"></i>
+                <h4>Prize Scam</h4>
+                <p>Fake lottery & rewards</p>
+            </div>
+
+            <div class="category-card">
+                <i class="fa-solid fa-briefcase"></i>
+                <h4>Job Scam</h4>
+                <p>Fake employment offers</p>
+            </div>
+
+            <div class="category-card">
+                <i class="fa-solid fa-box"></i>
+                <h4>Delivery Scam</h4>
+                <p>Fake courier calls</p>
+            </div>
+
+            <div class="category-card">
+                <i class="fa-solid fa-coins"></i>
+                <h4>Investment Scam</h4>
+                <p>Fake investment schemes</p>
+            </div>
+
+            <div class="category-card">
+                <i class="fa-solid fa-headset"></i>
+                <h4>Fake Support</h4>
+                <p>Fake customer service</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- HISTORY -->
+    <section class="page-section" id="history">
+
+        <div class="section-heading">
+            <div>
+                <p>ACTIVITY LOG</p>
+                <h2>Analysis History</h2>
+            </div>
+        </div>
+
+        <div class="glass-card">
+
+            <div class="history-controls">
+
+                <input
+                    type="text"
+                    id="searchHistory"
+                    placeholder="Search calls..."
+                    onkeyup="filterHistory()">
+
+                <select id="filterStatus"
+                        onchange="filterHistory()">
+                    <option value="all">All Status</option>
+                    <option value="high">High Risk</option>
+                    <option value="safe">Safe</option>
+                </select>
+
+            </div>
+
+            <div class="table-container">
+
+                <table id="historyTable">
+
+                    <thead>
+                        <tr>
+                            <th>Call</th>
+                            <th>Date</th>
+                            <th>Risk Score</th>
+                            <th>Status</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Call #001</td>
+                            <td>Today</td>
+                            <td>82%</td>
+                            <td><span class="status-tag high">High Risk</span></td>
+                            <td>Banking</td>
+                        </tr>
+
+                        <tr>
+                            <td>Call #002</td>
+                            <td>Today</td>
+                            <td>18%</td>
+                            <td><span class="status-tag safe">Safe</span></td>
+                            <td>Customer Support</td>
+                        </tr>
+
+                        <tr>
+                            <td>Call #003</td>
+                            <td>Yesterday</td>
+                            <td>91%</td>
+                            <td><span class="status-tag critical">Critical</span></td>
+                            <td>Investment</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SAFETY -->
+    <section class="page-section" id="safety">
+
+        <div class="section-heading">
+            <div>
+                <p>STAY PROTECTED</p>
+                <h2>Safety Recommendations</h2>
+            </div>
+        </div>
+
+        <div class="safety-grid">
+
+            <div class="safety-card">
+                <i class="fa-solid fa-key"></i>
+                <h3>Protect OTP & PIN</h3>
+                <p>
+                    Never share OTP, PIN, CVV or passwords with unknown callers.
+                </p>
+            </div>
+
+            <div class="safety-card">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+                <h3>Verify Payments</h3>
+                <p>
+                    Never transfer money just because a caller creates urgency.
+                </p>
+            </div>
+
+            <div class="safety-card">
+                <i class="fa-solid fa-phone"></i>
+                <h3>Verify the Caller</h3>
+                <p>
+                    Always use official websites or apps to find support numbers.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <i class="fa-solid fa-shield-halved"></i>
+        ScamShield AI • Text & Speech Analysis College Project
+        <br>
+        <span>Educational Demo • AI Security Concept</span>
+    </footer>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Success</span>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+```
